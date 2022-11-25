@@ -62,3 +62,8 @@ extension $GoRouterExtension on GoRouter {
 extension $GoRouterStateExtension on GoRouterState {
   Uri get uri => Uri.parse(location);
 }
+
+abstract class AppRouter {
+  // TODO: make this with reflection on GoRouter and GoRouterState
+  factory AppRouter.instance() => throw UnimplementedError(); // _$GoAppRouter();
+}
