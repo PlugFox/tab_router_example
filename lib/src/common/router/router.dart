@@ -10,10 +10,16 @@ import 'routes.dart';
 
 abstract class _AppRouterBase {}
 
-class AppRouter = _AppRouterBase with _AppRouterObservers, _AppRouterDelegate, _AppRouterShortcuts, _AppRouterGoRouter;
+class AppRouter = _AppRouterBase
+    with
+        _AppRouterObservers,
+        _AppRouterDelegate,
+        _AppRouterShortcuts,
+        _AppRouterGoRouter;
 
 mixin _AppRouterObservers {
-  final RouteObserver<ModalRoute<void>> _routeObserver = RouteObserver<ModalRoute<void>>();
+  final RouteObserver<ModalRoute<void>> _routeObserver =
+      RouteObserver<ModalRoute<void>>();
   final NavigatorObserver _analyticsObserver = ModalRouteAnalyticsObserver();
 }
 
@@ -30,7 +36,8 @@ mixin _AppRouterShortcuts on _AppRouterObservers, _AppRouterDelegate {
   bool get isReady => navigator != null;
   String? get location => routeInformation.location;
   Uri get uri => Uri.parse(location ?? '/');
-  Map<String, String> get queryParameters => UnmodifiableMapView<String, String>(uri.queryParameters);
+  Map<String, String> get queryParameters =>
+      UnmodifiableMapView<String, String>(uri.queryParameters);
 }
 
 mixin _AppRouterGoRouter on _AppRouterDelegate, _AppRouterObservers {
@@ -53,13 +60,16 @@ mixin _AppRouterGoRouter on _AppRouterDelegate, _AppRouterObservers {
   RouterDelegate<Object> get routerDelegate => _router.routerDelegate;
 
   @override
-  RouteInformationParser<Object> get routeInformationParser => _router.routeInformationParser;
+  RouteInformationParser<Object> get routeInformationParser =>
+      _router.routeInformationParser;
 
   @override
-  RouteInformationProvider get routeInformationProvider => _router.routeInformationProvider;
+  RouteInformationProvider get routeInformationProvider =>
+      _router.routeInformationProvider;
 
   @override
-  ValueListenable<RouteInformation> get routeInformationListenable => _router.routeInformationProvider;
+  ValueListenable<RouteInformation> get routeInformationListenable =>
+      _router.routeInformationProvider;
 
   @override
   RouteInformation get routeInformation => routeInformationListenable.value;

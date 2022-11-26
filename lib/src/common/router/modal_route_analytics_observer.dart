@@ -9,7 +9,10 @@ class ModalRouteAnalyticsObserver extends RouteObserver<ModalRoute<Object?>> {
   static const String _kUnknownScreen = 'screen';
   static const String _kUnknownModal = 'modal';
 
-  static void logRoute({required String screenName, String className = 'Page'}) {
+  static void logRoute({
+    required String screenName,
+    String className = 'Page',
+  }) {
     //l.v6('Current route: $screenName');
     Analytics.logScreen(screenName: screenName, screenClass: className);
   }
@@ -53,6 +56,8 @@ class ModalRouteAnalyticsObserver extends RouteObserver<ModalRoute<Object?>> {
   @override
   void didPop(Route<Object?> route, Route<Object?>? previousRoute) {
     super.didPop(route, previousRoute);
-    if (previousRoute is ModalRoute && route is ModalRoute) _onModalRoute(previousRoute);
+    if (previousRoute is ModalRoute && route is ModalRoute) {
+      _onModalRoute(previousRoute);
+    }
   }
 }

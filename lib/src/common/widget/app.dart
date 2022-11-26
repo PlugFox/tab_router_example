@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../feature/product/widget/product_scope.dart';
 import 'material_scope.dart';
 
 /// {@template app}
@@ -10,5 +11,7 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialScope();
+  Widget build(BuildContext context) => const ProductScope(
+        child: MaterialScope(),
+      );
 }

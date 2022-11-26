@@ -31,7 +31,8 @@ FutureOr<void> $initializeApp({
         }
       } on Object catch (error, stackTrace) {
         onError?.call(error, stackTrace).ignore();
-        ErrorUtil.logError(error, stackTrace, hint: 'Failed to initialize app').ignore();
+        ErrorUtil.logError(error, stackTrace, hint: 'Failed to initialize app')
+            .ignore();
         rethrow;
       } finally {
         stopwatch.stop();

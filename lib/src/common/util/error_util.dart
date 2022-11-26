@@ -58,7 +58,8 @@ abstract class ErrorUtil {
   }
 
   @alwaysThrows
-  static Never throwWithStackTrace(Object error, StackTrace stackTrace) => Error.throwWithStackTrace(error, stackTrace);
+  static Never throwWithStackTrace(Object error, StackTrace stackTrace) =>
+      Error.throwWithStackTrace(error, stackTrace);
 
   static String formatMessage(
     Object error, [
@@ -97,7 +98,8 @@ abstract class ErrorUtil {
     }
   }
 
-  static void showSnackBar(BuildContext context, String message) => ScaffoldMessenger.of(context).showSnackBar(
+  static void showSnackBar(BuildContext context, String message) =>
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
           backgroundColor: Colors.red,

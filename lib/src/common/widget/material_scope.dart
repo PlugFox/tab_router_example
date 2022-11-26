@@ -29,7 +29,9 @@ class _MaterialScopeState extends State<MaterialScope> {
         restorationScopeId: 'app',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
-        theme: ui.window.platformBrightness == ui.Brightness.light ? ThemeData.light() : ThemeData.dark(),
+        theme: ui.window.platformBrightness == ui.Brightness.light
+            ? ThemeData.light()
+            : ThemeData.dark(),
         localizationsDelegates: const <LocalizationsDelegate<Object?>>[
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

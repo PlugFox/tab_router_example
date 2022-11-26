@@ -36,7 +36,7 @@ Future<void> $captureMessage(
   bool warning,
 ) =>
     Future<void>.value();
-    /* warning || stackTrace != null
+/* warning || stackTrace != null
         ? FirebaseCrashlytics.instance.recordError(
             message,
             stackTrace ?? StackTrace.current,

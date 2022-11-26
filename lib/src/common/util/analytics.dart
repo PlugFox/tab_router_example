@@ -4,7 +4,11 @@ import 'package:meta/meta.dart';
 abstract class Analytics {
   Analytics._();
 
-  static void logScreen({required String screenClass, required String screenName}) => Future<void>.value().ignore();
+  static void logScreen({
+    required String screenClass,
+    required String screenName,
+  }) =>
+      Future<void>.value().ignore();
 
   static void logScreenPage(String screenName) => logScreen(screenClass: 'Page', screenName: screenName);
 
