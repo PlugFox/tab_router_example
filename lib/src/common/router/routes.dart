@@ -12,6 +12,8 @@ import '../../feature/profile/widget/profile_screen.dart';
 import '../../feature/settings/widget/settings_screen.dart';
 import '../widget/tabs_screen.dart';
 
+/// TODO: custom routing
+
 final List<RouteBase> $routes = <RouteBase>[
   // --- Tabs --- //
 
