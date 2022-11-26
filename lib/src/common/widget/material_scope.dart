@@ -25,13 +25,11 @@ class _MaterialScopeState extends State<MaterialScope> {
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
-        title: 'go_router_example',
+        title: 'tab_router_example',
         restorationScopeId: 'app',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
-        theme: ui.window.platformBrightness == ui.Brightness.light
-            ? ThemeData.light()
-            : ThemeData.dark(),
+        theme: ui.window.platformBrightness == ui.Brightness.light ? ThemeData.light() : ThemeData.dark(),
         localizationsDelegates: const <LocalizationsDelegate<Object?>>[
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

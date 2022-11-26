@@ -1,11 +1,11 @@
 {
-    "name": "go_router_example",
-    "short_name": "go_router_example",
+    "name": "tab_router_example",
+    "short_name": "tab_router_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "go_router_example",
+    "description": "tab_router_example",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

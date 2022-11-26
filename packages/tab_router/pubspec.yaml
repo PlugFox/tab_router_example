@@ -1,0 +1,17 @@
+name: tab_router
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.0-374.1.beta <3.0.0'
+  flutter: '>=3.6.0-0.1.pre'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  platform_info: ^3.2.0
+
+flutter:
+  uses-material-design: true
