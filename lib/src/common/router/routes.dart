@@ -31,7 +31,6 @@ final List<RouteBase> $routes = <RouteBase>[
         path: '/shop',
         builder: (context, state) => const ShopScreen(),
         routes: <RouteBase>[
-          //..._$buildCategories(1, 25),
           GoRoute(
             name: 'Category',
             path: 'category/:category',
@@ -67,18 +66,6 @@ final List<RouteBase> $routes = <RouteBase>[
     redirect: (context, state) => '/shop',
   ),
 ];
-
-/* List<RouteBase> _$buildCategories(int i, int total) => <RouteBase>[
-      GoRoute(
-        path: 'category/:category',
-        builder: (context, state) => CategoryScreen(categoryID: state.params['category'] ?? 'unknown'),
-        routes: i == total ? <RouteBase>[] : _$buildCategories(i + 1, total),
-      ),
-      GoRoute(
-        path: 'product/:product',
-        builder: (context, state) => CategoryScreen(categoryID: state.params['product'] ?? 'unknown'),
-      ),
-    ]; */
 
 extension $GoRouterExtension on GoRouter {
   Uri get uri => Uri.parse(location);
