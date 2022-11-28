@@ -1,59 +1,75 @@
 import 'dart:collection';
 
-import 'named_page.dart';
-import 'tab.dart';
+import 'package:flutter/widgets.dart' show RouteSettings;
+import 'package:meta/meta.dart';
 
-abstract class TabsPages implements Map<Tab, List<NamedPage>> {
-  factory TabsPages(Tab current, Map<Tab, List<NamedPage>> pages) = _TabsPagesView;
+typedef TabName = String;
 
-  abstract final Tab current;
+@internal
+abstract class TabsSettings implements Map<TabName, List<RouteSettings>> {
+  factory TabsSettings(TabName? current, Map<TabName, List<RouteSettings>> pages) = _TabsSettingsView;
+  factory TabsSettings.empty() = _TabsSettingsView.empty;
+
+  abstract final TabName? current;
 
   abstract final bool canPop;
 
-  TabsPages copyWith({
-    Tab? newCurrent,
-    Map<Tab, List<NamedPage>>? newPages,
+  TabsSettings copyWith({
+    TabName? newCurrent,
+    Map<TabName, List<RouteSettings>>? newPages,
   });
 
-  TabsPages maybePop();
+  TabsSettings maybePop();
 }
 
-class _TabsPagesView extends UnmodifiableMapBase<Tab, List<NamedPage>> implements TabsPages {
-  _TabsPagesView(this.current, this._pages);
+class _TabsSettingsView extends UnmodifiableMapBase<TabName, List<RouteSettings>> implements TabsSettings {
+  _TabsSettingsView(TabName? current, this._pages)
+      : current = _evalCurrentTab(current, _pages.keys.toList(growable: false));
+  _TabsSettingsView.empty()
+      : current = null,
+        _pages = const <TabName, List<RouteSettings>>{};
+
+  static TabName? _evalCurrentTab(TabName? current, List<TabName> tabs) {
+    assert(current == null || tabs.contains(current), 'Current tab must be in pages');
+    TabName? firsOrNull() => tabs.isNotEmpty ? tabs.first : null;
+    if (current == null) return firsOrNull();
+    if (tabs.contains(current)) return current;
+    return firsOrNull();
+  }
 
   @override
-  final Tab current;
+  final TabName? current;
 
   @override
-  bool get canPop => _pages[current]!.length > 1;
+  bool get canPop => current != null && _pages[current]!.length > 1;
 
-  final Map<Tab, List<NamedPage>> _pages;
-
-  @override
-  Iterable<Tab> get keys => _pages.keys;
+  final Map<TabName, List<RouteSettings>> _pages;
 
   @override
-  List<NamedPage>? operator [](Object? key) => _pages[key];
+  Iterable<TabName> get keys => _pages.keys;
 
   @override
-  TabsPages copyWith({
-    Tab? newCurrent,
-    Map<Tab, List<NamedPage>>? newPages,
+  List<RouteSettings>? operator [](Object? key) => _pages[key];
+
+  @override
+  TabsSettings copyWith({
+    TabName? newCurrent,
+    Map<TabName, List<RouteSettings>>? newPages,
   }) =>
-      _TabsPagesView(
+      _TabsSettingsView(
         newCurrent ?? current,
-        {
+        <TabName, List<RouteSettings>>{
           ..._pages,
           if (newPages != null) ...newPages,
         },
       );
 
   @override
-  TabsPages maybePop() => canPop
+  TabsSettings maybePop() => canPop
       ? copyWith(
-          newPages: <Tab, List<NamedPage>>{
+          newPages: <TabName, List<RouteSettings>>{
             ..._pages,
-            current: _pages[current]!.sublist(0, _pages[current]!.length - 1),
+            current!: _pages[current]!.sublist(0, _pages[current]!.length - 1),
           },
         )
       : this;

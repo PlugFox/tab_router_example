@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/router/routes.dart';
 import '../../../common/widget/common_actions.dart';
 import '../model/category.dart';
 import 'product_scope.dart';

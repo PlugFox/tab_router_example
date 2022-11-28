@@ -9,8 +9,11 @@ environment:
   flutter: '>=3.6.0-0.1.pre'
 
 dependencies:
+  collection: ^1.17.0
   flutter:
     sdk: flutter
+  meta: ^1.7.0
+  path: ^1.8.2
   platform_info: ^3.2.0
 
 flutter:

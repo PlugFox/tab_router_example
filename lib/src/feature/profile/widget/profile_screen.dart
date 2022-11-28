@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../common/router/routes.dart';
-
 /// {@template profile_screen}
 /// ProfileScreen widget
 /// {@endtemplate}

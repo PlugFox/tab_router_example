@@ -5,7 +5,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../feature/authentication/widget/authentication_scope.dart';
 import '../localization/localization.dart';
-import '../router/router.dart';
 import 'error_screen.dart';
 
 /// {@template material_scope}
@@ -13,7 +12,12 @@ import 'error_screen.dart';
 /// {@endtemplate}
 class MaterialScope extends StatefulWidget {
   /// {@macro material_scope}
-  const MaterialScope({super.key});
+  const MaterialScope({
+    required this.routerConfig,
+    super.key,
+  });
+
+  final RouterConfig<Object> routerConfig;
 
   @override
   State<MaterialScope> createState() => _MaterialScopeState();
@@ -21,8 +25,6 @@ class MaterialScope extends StatefulWidget {
 
 /// State for widget MaterialScope
 class _MaterialScopeState extends State<MaterialScope> {
-  final AppRouter _router = AppRouter();
-
   @override
   Widget build(BuildContext context) => MaterialApp.router(
         title: 'tab_router_example',
@@ -37,9 +39,7 @@ class _MaterialScopeState extends State<MaterialScope> {
           Localization.delegate,
         ],
         supportedLocales: Localization.supportedLocales,
-        routerDelegate: _router.routerDelegate,
-        routeInformationParser: _router.routeInformationParser,
-        routeInformationProvider: _router.routeInformationProvider,
+        routerConfig: widget.routerConfig,
         builder: (context, child) => MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
           child: Banner(

@@ -1,26 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
-import 'adaptive_page.dart';
 import 'inherited_tab_router.dart';
-import 'tab.dart';
-import 'tab_router_state.dart';
-import 'tabs_stack.dart';
+import 'tab_route_state.dart';
+import 'utils.dart';
 
-class TabRouterDelegate extends RouterDelegate<TabRouterState> with ChangeNotifier, _AppNavigatorMixin {
+@internal
+class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifier, _AppNavigatorMixin {
   TabRouterDelegate();
 
   @override
-  TabRouterState get currentConfiguration {
+  TabRouteState get currentConfiguration {
     final state = _currentConfiguration;
     if (state == null) throw UnsupportedError('Initial configuration not set');
     return state;
   }
 
-  TabRouterState? _currentConfiguration;
+  TabRouteState? _currentConfiguration;
 
   @override
-  Future<void> setNewRoutePath(covariant TabRouterState configuration) {
+  Future<void> setNewRoutePath(covariant TabRouteState configuration) {
     // If unchanged, do nothing
     //if (_currentConfiguration == configuration) return SynchronousFuture<void>(null);
     _currentConfiguration = configuration;
@@ -39,40 +39,44 @@ class TabRouterDelegate extends RouterDelegate<TabRouterState> with ChangeNotifi
   }
 
   @override
-  Widget build(BuildContext context) => Navigator(
-        // TODO: key: navigatorKey,
-        // TODO: restorationScopeId: restorationScopeId,
-        transitionDelegate: const DefaultTransitionDelegate<Object?>(),
-        // TODO: onUnknownRoute: _onUnknownRoute,
-        reportsRouteUpdateToEngine: true,
-        observers: <NavigatorObserver>[
-          _modalObserver,
-          // TODO: ...observers
-        ],
-        pages: <Page<void>>[
-          for (final page in currentConfiguration.pages)
-            AdaptivePage(
-              name: page.name,
-              builder: (context) => InheritedTabRouter.of(context).screenBuilder(context, page.name, page.arguments),
-            ),
-          AdaptivePage(
-            name: 'Tabs',
-            builder: (context) => TabsStack(
-              builder: (BuildContext context, Tab tab, Map<String, String> argument) => IndexedStack(
-                index: tab.index,
-                children: <Widget>[
-                  for (final tab in InheritedTabRouter.of(context).tabs)
-                    Navigator(
-                      pages: currentConfiguration.tabs[tab]!,
-                      onPopPage: _onPopPage,
-                    ),
-                ],
-              ),
+  Widget build(BuildContext context) {
+    final inhTabRouter = InheritedTabRouter.of(context, listen: false);
+    return Navigator(
+      // TODO: key: navigatorKey,
+      // TODO: restorationScopeId: restorationScopeId,
+      transitionDelegate: const DefaultTransitionDelegate<Object?>(),
+      // TODO: onUnknownRoute: _onUnknownRoute,
+      reportsRouteUpdateToEngine: true,
+      observers: <NavigatorObserver>[
+        _modalObserver,
+        // TODO: ...observers
+      ],
+      pages: <Page<void>>[
+        for (final route in currentConfiguration.pages)
+          inhTabRouter.pageBuilder(
+            context,
+            RouterUtils.safeRouteName(route.name),
+            RouterUtils.safeRouteArguments(route.arguments),
+          ),
+        /* NoOptPage(
+          name: 'Tabs',
+          builder: (context) => TabsStack(
+            builder: (BuildContext context, String tab, Map<String, String> argument) => IndexedStack(
+              index: tab.index,
+              children: <Widget>[
+                for (final tab in InheritedTabRouter.of(context).tabs)
+                  Navigator(
+                    pages: currentConfiguration.tabs[tab]!,
+                    onPopPage: _onPopPage,
+                  ),
+              ],
             ),
           ),
-        ],
-        onPopPage: _onPopPage,
-      );
+        ),*/
+      ],
+      onPopPage: _onPopPage,
+    );
+  }
 
   bool _onPopPage(Route<Object?> route, Object? result) {
     if (!route.didPop(result)) return false;

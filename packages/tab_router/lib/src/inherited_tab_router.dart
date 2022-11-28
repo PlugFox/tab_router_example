@@ -1,22 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-
-import 'tab.dart';
+import 'package:meta/meta.dart';
 
 /// {@template inherited_tab_router}
 /// InheritedTabRouter widget
 /// {@endtemplate}
+@internal
 class InheritedTabRouter extends InheritedWidget {
   /// {@macro inherited_tab_router}
   const InheritedTabRouter({
     required super.child,
-    required this.screenBuilder,
+    required this.pageBuilder,
     required this.tabs,
     super.key,
   });
 
-  final Widget Function(BuildContext context, String name, Map<String, String> arguments) screenBuilder;
-  final List<Tab> tabs;
+  final Page Function(BuildContext context, String name, Map<String, String> arguments) pageBuilder;
+  final List<String> tabs;
 
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
@@ -36,6 +36,13 @@ class InheritedTabRouter extends InheritedWidget {
         'out_of_scope',
       );
 
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) => super.debugFillProperties(
+        properties
+          ..add(IntProperty('Tabs count', tabs.length))
+          ..add(IterableProperty<String>('Tabs', tabs)),
+      );
+
   /// The state from the closest instance of this class
   /// that encloses the given context.
   /// e.g. `InheritedTabRouter.of(context)`
@@ -43,5 +50,5 @@ class InheritedTabRouter extends InheritedWidget {
       maybeOf(context, listen: listen) ?? _notFoundInheritedWidgetOfExactType();
 
   @override
-  bool updateShouldNotify(covariant InheritedTabRouter oldWidget) => !listEquals<Tab>(tabs, oldWidget.tabs);
+  bool updateShouldNotify(covariant InheritedTabRouter oldWidget) => !listEquals<String>(tabs, oldWidget.tabs);
 }
