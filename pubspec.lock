@@ -288,11 +288,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -309,14 +304,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      sha256: b96c2527b7f488b54d076e662bdb65192890571aba32e1f740faff474bddd70c
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0"
   graphs:
     dependency: transitive
     description:
@@ -477,6 +464,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  platform_info:
+    dependency: transitive
+    description:
+      name: platform_info
+      sha256: "012e73712166cf0b56d3eb95c0d33491f56b428c169eca385f036448474147e4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   pool:
     dependency: transitive
     description:
@@ -610,6 +605,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  tab_router:
+    dependency: "direct main"
+    description:
+      path: "packages/tab_router"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   term_glyph:
     dependency: transitive
     description:

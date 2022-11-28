@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.plugfox.go_router_example">
+    package="dev.plugfox.tab_router_example">
    <application
-        android:label="go_router_example"
+        android:label="tab_router_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

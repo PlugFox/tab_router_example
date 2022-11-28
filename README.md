@@ -1,6 +1,6 @@
-# go_router_example
+# tab_router_example
 
-go_router_example
+tab_router_example
 
 ## Getting Started
 
