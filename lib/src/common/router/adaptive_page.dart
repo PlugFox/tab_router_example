@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:platform_info/platform_info.dart';
 
+import 'named_page.dart';
+
 @internal
 class AdaptivePage extends NamedPage {
   AdaptivePage({

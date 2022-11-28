@@ -1,8 +1,6 @@
 import 'dart:developer' as developer;
 
-import 'package:flutter/foundation.dart' show kDebugMode;
-
-bool _$enabled = kDebugMode;
+bool _$enabled = false;
 void $setLogging({required bool? enabled}) => _$enabled = enabled ?? _$enabled;
 
 /// Tracing information
@@ -29,7 +27,7 @@ void Function(
       developer.log(
         '[$prefix] ${reason ?? message}',
         level: level,
-        name: 'isolation',
+        name: 'router',
         error: message is Exception || message is Error ? message : null,
         stackTrace: stackTrace,
       );
