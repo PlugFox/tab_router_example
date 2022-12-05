@@ -1,74 +1,44 @@
-import 'dart:collection';
-
-import 'package:go_router/go_router.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../feature/favorite/widget/favorite_screen.dart';
-import '../../feature/product/model/category.dart';
-import '../../feature/product/model/product.dart';
 import '../../feature/product/widget/category_screen.dart';
 import '../../feature/product/widget/product_screen.dart';
 import '../../feature/product/widget/shop_screen.dart';
 import '../../feature/profile/widget/profile_screen.dart';
 import '../../feature/settings/widget/settings_screen.dart';
-import '../widget/tabs_screen.dart';
+import 'adaptive_page.dart';
 
-/// TODO: custom routing
+typedef NamedPageBuilder = Page<Object?> Function(BuildContext context, Map<String, String> arguments);
 
-final List<RouteBase> $routes = <RouteBase>[
-  // --- Tabs --- //
-
-  ShellRoute(
-    builder: (context, state, child) => TabsScreen(
-      key: state.pageKey,
-      child: child,
-    ),
-    routes: <GoRoute>[
-      GoRoute(
+/* Name: PageBuilder */
+final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
+  'favorite': (context, arguments) => AdaptivePage(
         name: 'Favorite',
-        path: '/favorite',
-        builder: (context, state) => const FavoriteScreen(),
+        builder: (context) => const FavoriteScreen(),
       ),
-      GoRoute(
+  'shop': (context, arguments) => AdaptivePage(
         name: 'Shop',
-        path: '/shop',
-        builder: (context, state) => const ShopScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-            name: 'Category',
-            path: 'category/:category',
-            builder: (context, state) => CategoryScreen(categoryID: state.params['category'] ?? 'unknown'),
-          ),
-          GoRoute(
-            name: 'Product',
-            path: 'product/:product',
-            builder: (context, state) => ProductScreen(productID: int.tryParse(state.params['product'] ?? '-1') ?? -1),
-          ),
-        ],
+        builder: (context) => const ShopScreen(),
       ),
-      GoRoute(
+  'category': (context, arguments) => AdaptivePage(
+        name: 'Category',
+        builder: (context) => CategoryScreen(categoryID: arguments['category'] ?? 'unknown'),
+      ),
+  'product': (context, arguments) => AdaptivePage(
+        name: 'Product',
+        builder: (context) => ProductScreen(productID: int.tryParse(arguments['product'] ?? '-1') ?? -1),
+      ),
+  'settings': (context, arguments) => AdaptivePage(
         name: 'Settings',
-        path: '/settings',
-        builder: (context, state) => const SettingsScreen(),
+        builder: (context) => const SettingsScreen(),
       ),
-    ],
-  ),
+  'profile': (context, arguments) => AdaptivePage(
+        name: 'Profile',
+        builder: (context) => const ProfileScreen(),
+      ),
+};
 
-  // --- Profile --- //
-
-  GoRoute(
-    name: 'Profile',
-    path: '/profile',
-    builder: (context, state) => const ProfileScreen(),
-  ),
-
-  // --- Redirecting & alias routes --- //
-  GoRoute(
-    name: 'Home',
-    path: '/',
-    redirect: (context, state) => '/shop',
-  ),
-];
-
+/*
 extension $GoRouterExtension on GoRouter {
   Uri get uri => Uri.parse(location);
   Map<String, String> get queryParams => UnmodifiableMapView<String, String>(uri.queryParameters);
@@ -96,3 +66,4 @@ abstract class AppRouter {
   // TODO: make this with reflection on GoRouter and GoRouterState
   factory AppRouter.instance() => throw UnimplementedError(); // _$GoAppRouter();
 }
+*/

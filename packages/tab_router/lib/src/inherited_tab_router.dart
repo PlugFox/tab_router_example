@@ -10,6 +10,7 @@ class InheritedTabRouter extends InheritedWidget {
   /// {@macro inherited_tab_router}
   const InheritedTabRouter({
     required super.child,
+    required this.tabsBuilder,
     required this.pageBuilder,
     required this.tabs,
     super.key,

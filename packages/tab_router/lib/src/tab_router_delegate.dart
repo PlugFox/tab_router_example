@@ -7,7 +7,7 @@ import 'tab_route_state.dart';
 import 'utils.dart';
 
 @internal
-class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifier, _AppNavigatorMixin {
+class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifier, _NavigatorMixin, RouterController {
   TabRouterDelegate();
 
   @override
@@ -87,7 +87,12 @@ class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifie
   }
 }
 
-mixin _AppNavigatorMixin {
+mixin _NavigatorMixin {
   NavigatorState? get navigator => _modalObserver.navigator;
   final NavigatorObserver _modalObserver = RouteObserver<ModalRoute<Object?>>();
+}
+
+mixin RouterController on RouterDelegate<TabRouteState>, _NavigatorMixin, ChangeNotifier {
+  @override
+  TabRouteState get currentConfiguration;
 }

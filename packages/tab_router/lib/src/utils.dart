@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+@internal
 @sealed
 abstract class RouterUtils {
   RouterUtils._();

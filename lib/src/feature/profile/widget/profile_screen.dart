@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 /// {@template profile_screen}
 /// ProfileScreen widget
@@ -13,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.adaptive.arrow_back),
-            onPressed: () => GoRouter.of(context).goHome(),
+            onPressed: () => throw UnimplementedError(), // GoRouter.of(context).goHome(),
           ),
           title: const Text('Profile'),
         ),

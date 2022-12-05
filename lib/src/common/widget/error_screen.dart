@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
-
-import '../router/routes.dart';
 
 /// {@template error_screen}
 /// ErrorScreen widget
@@ -40,8 +37,7 @@ class ErrorScreen extends StatelessWidget {
       );
 
   Iterable<Widget> _buildButtons(BuildContext context) sync* {
-    void pop(BuildContext context) =>
-        Navigator.canPop(context) ? Navigator.pop(context) : GoRouter.of(context).goHome();
+    void pop(BuildContext context) => Navigator.canPop(context) ? Navigator.pop(context) : null;
 
     yield const SizedBox(height: 16);
     if (tryAgain != null) {
