@@ -15,6 +15,7 @@ class TabRouterBuilder extends StatefulWidget {
   /// {@macro tab_router_builder}
   const TabRouterBuilder({
     required this.routerBuilder,
+    required this.tabsBuilder,
     required this.pageBuilder,
     required this.tabs,
     this.debugLogDiagnostics,
@@ -27,12 +28,19 @@ class TabRouterBuilder extends StatefulWidget {
   /// This callback used for building [WidgetsApp.router]
   final Widget Function(BuildContext context, RouterConfig<TabRouteState> config) routerBuilder;
 
-  /// This callback used for building current page
+  /// This callback used for building root with tabs
+  /// [tabs] - list of tabs
+  /// [currentTab] - current tab
+  /// [body] - navigation stack
+  final Widget Function(BuildContext context, List<String> tabs, String? currentTab, Widget body) tabsBuilder;
+
+  /// This callback used for building every page
   final Page Function(BuildContext context, String name, Map<String, String> arguments) pageBuilder;
 
   /// List of tabs
   final List<String> tabs;
 
+  /// Debug log diagnostics
   final bool? debugLogDiagnostics;
 
   @override

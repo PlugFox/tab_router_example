@@ -15,6 +15,7 @@ class InheritedTabRouter extends InheritedWidget {
     super.key,
   });
 
+  final Widget Function(BuildContext context, List<String> tabs, String? currentTab, Widget body) tabsBuilder;
   final Page Function(BuildContext context, String name, Map<String, String> arguments) pageBuilder;
   final List<String> tabs;
 
