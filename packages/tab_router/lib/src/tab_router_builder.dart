@@ -26,17 +26,29 @@ class TabRouterBuilder extends StatefulWidget {
   final String? initialLocation;
 
   /// This callback used for building [WidgetsApp.router]
-  final Widget Function(BuildContext context, RouterConfig<TabRouteState> config, RouterController controller)
-      routerBuilder;
+  final Widget Function(
+    BuildContext context,
+    RouterConfig<TabRouteState> config,
+    RouterController controller,
+  ) routerBuilder;
 
   /// This callback used for building root with tabs
   /// [tabs] - list of tabs
   /// [currentTab] - current tab
   /// [body] - navigation stack
-  final Widget Function(BuildContext context, List<String> tabs, String? currentTab, Widget body) tabsBuilder;
+  final Widget Function(
+    BuildContext context,
+    List<String> tabs,
+    String? currentTab,
+    Widget body,
+  ) tabsBuilder;
 
   /// This callback used for building every page
-  final Page Function(BuildContext context, String name, Map<String, String> arguments) pageBuilder;
+  final Page Function(
+    BuildContext context,
+    String name,
+    Map<String, String> arguments,
+  ) pageBuilder;
 
   /// List of tabs
   final List<String> tabs;
@@ -76,6 +88,7 @@ class _TabRouterBuilderState extends State<TabRouterBuilder> with _TabRouterBuil
         pageBuilder: widget.pageBuilder,
         tabs: widget.tabs,
         tabsBuilder: widget.tabsBuilder,
+        controller: _delegate,
         child: Builder(builder: (context) => widget.routerBuilder(context, _config, _delegate)),
       );
 }

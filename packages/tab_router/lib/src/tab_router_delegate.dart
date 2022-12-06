@@ -3,7 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 import 'inherited_tab_router.dart';
+import 'listenable_selector.dart';
+import 'root_page.dart';
 import 'tab_route_state.dart';
+import 'tabs_stack.dart';
 import 'utils.dart';
 
 @internal
@@ -65,27 +68,29 @@ class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifie
         // TODO: ...observers
       ],
       pages: <Page<void>>[
+        RootPage(
+          //key: ValueKey<String>(currentConfiguration.tabs.current ?? ''),
+          name: 'Tabs',
+          restorationId: 'Tabs',
+          child: ValueListenableBuilder<TabRouteState>(
+            valueListenable: select(
+              (controller) => controller.value,
+              (prev, next) => prev.tabs != next.tabs,
+            ),
+            builder: (context, state, _) => inhTabRouter.tabsBuilder(
+              context,
+              inhTabRouter.tabs,
+              state.tabs.current,
+              TabsStack(tabsState: state.tabs),
+            ),
+          ),
+        ),
         for (final route in currentConfiguration.pages)
           inhTabRouter.pageBuilder(
             context,
             RouterUtils.safeRouteName(route.name),
             RouterUtils.safeRouteArguments(route.arguments),
           ),
-        /* NoOptPage(
-          name: 'Tabs',
-          builder: (context) => TabsStack(
-            builder: (BuildContext context, String tab, Map<String, String> argument) => IndexedStack(
-              index: tab.index,
-              children: <Widget>[
-                for (final tab in InheritedTabRouter.of(context).tabs)
-                  Navigator(
-                    pages: currentConfiguration.tabs[tab]!,
-                    onPopPage: _onPopPage,
-                  ),
-              ],
-            ),
-          ),
-        ),*/
       ],
       onPopPage: _onPopPage,
     );

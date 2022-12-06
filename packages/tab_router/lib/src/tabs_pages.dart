@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart' show RouteSettings;
 import 'package:meta/meta.dart';
 
@@ -22,6 +23,7 @@ abstract class TabsSettings implements Map<TabName, List<RouteSettings>> {
   TabsSettings maybePop();
 }
 
+@immutable
 class _TabsSettingsView extends UnmodifiableMapBase<TabName, List<RouteSettings>> implements TabsSettings {
   _TabsSettingsView(TabName? current, this._pages)
       : current = _evalCurrentTab(current, _pages.keys.toList(growable: false));
@@ -30,18 +32,16 @@ class _TabsSettingsView extends UnmodifiableMapBase<TabName, List<RouteSettings>
         _pages = const <TabName, List<RouteSettings>>{};
 
   static TabName? _evalCurrentTab(TabName? current, List<TabName> tabs) {
-    assert(current == null || tabs.contains(current), 'Current tab must be in pages');
+    //assert(current == null || tabs.contains(current), 'Current tab must be in pages');
     TabName? firsOrNull() => tabs.isNotEmpty ? tabs.first : null;
-    if (current == null) return firsOrNull();
-    if (tabs.contains(current)) return current;
-    return firsOrNull();
+    return current ?? firsOrNull();
   }
 
   @override
   final TabName? current;
 
   @override
-  bool get canPop => current != null && _pages[current]!.length > 1;
+  bool get canPop => current != null && (_pages[current]?.isNotEmpty ?? false);
 
   final Map<TabName, List<RouteSettings>> _pages;
 
@@ -73,4 +73,14 @@ class _TabsSettingsView extends UnmodifiableMapBase<TabName, List<RouteSettings>
           },
         )
       : this;
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[current, _pages]);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is _TabsSettingsView &&
+          current == other.current &&
+          const DeepCollectionEquality().equals(_pages, other._pages);
 }

@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.adaptive.arrow_back),
-            onPressed: () => throw UnimplementedError(), // GoRouter.of(context).goHome(),
+            onPressed: () => Navigator.maybePop(context),
           ),
           title: const Text('Profile'),
         ),

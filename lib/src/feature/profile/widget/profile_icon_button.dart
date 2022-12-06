@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/router/app_router.dart';
+
 /// {@template profile_icon_button}
 /// ProfileIconButton widget
 /// {@endtemplate}
@@ -9,7 +11,7 @@ class ProfileIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton(
-        onPressed: () => throw UnimplementedError(), // GoRouter.of(context).goProfile(),
+        onPressed: () => AppRouter.of(context).push('profile'),
         icon: const Icon(Icons.person),
       );
 }

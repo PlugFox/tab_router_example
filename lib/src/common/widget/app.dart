@@ -16,19 +16,32 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ProductScope(
         child: TabRouterBuilder(
-          tabs: const <String>[],
-          routerBuilder: (context, config, controller) => MaterialScope(routerConfig: config, controller: controller),
+          tabs: Tabs.values.map<String>((e) => e.name).toList(),
+          routerBuilder: _routerBuilder,
           pageBuilder: _pageBuilder,
           tabsBuilder: _tabsBuilder,
         ),
       );
 
-  static Page<Object?> _pageBuilder(BuildContext context, String name, Map<String, String> arguments) =>
+  static Widget _routerBuilder(
+    BuildContext context,
+    RouterConfig<TabRouteState> config,
+    RouterController controller,
+  ) =>
+      MaterialScope(routerConfig: config, controller: controller);
+
+  static Page<Object?> _pageBuilder(
+    BuildContext context,
+    String name,
+    Map<String, String> arguments,
+  ) =>
       $routes[name]!(context, arguments);
 
-  static Widget _tabsBuilder(BuildContext context, List<String> tabs, String? currentTab, Widget body) => TabsScreen(
-        tabs: tabs,
-        currentTab: currentTab,
-        body: body,
-      );
+  static Widget _tabsBuilder(
+    BuildContext context,
+    List<String> tabs,
+    String? currentTab,
+    Widget body,
+  ) =>
+      TabsScreen(tabs: tabs, currentTab: currentTab, body: body);
 }

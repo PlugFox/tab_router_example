@@ -22,11 +22,11 @@ final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
       ),
   'category': (context, arguments) => AdaptivePage(
         name: 'Category',
-        builder: (context) => CategoryScreen(categoryID: arguments['category'] ?? 'unknown'),
+        builder: (context) => CategoryScreen(categoryID: arguments['id'] ?? 'unknown'),
       ),
   'product': (context, arguments) => AdaptivePage(
         name: 'Product',
-        builder: (context) => ProductScreen(productID: int.tryParse(arguments['product'] ?? '-1') ?? -1),
+        builder: (context) => ProductScreen(productID: int.tryParse(arguments['id'] ?? '-1') ?? -1),
       ),
   'settings': (context, arguments) => AdaptivePage(
         name: 'Settings',
@@ -37,33 +37,3 @@ final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
         builder: (context) => const ProfileScreen(),
       ),
 };
-
-/*
-extension $GoRouterExtension on GoRouter {
-  Uri get uri => Uri.parse(location);
-  Map<String, String> get queryParams => UnmodifiableMapView<String, String>(uri.queryParameters);
-
-  void goHome() => go('/');
-
-  void goFavorite() => goNamed('Favorite');
-
-  void goShop() => goNamed('Shop');
-
-  void goCategory(CategoryID id) => pushNamed('Category', params: <String, String>{'category': id});
-
-  void goProduct(ProductID id) => pushNamed('Product', params: <String, String>{'product': id.toString()});
-
-  void goSettings() => goNamed('Settings');
-
-  void goProfile() => goNamed('Profile');
-}
-
-extension $GoRouterStateExtension on GoRouterState {
-  Uri get uri => Uri.parse(location);
-}
-
-abstract class AppRouter {
-  // TODO: make this with reflection on GoRouter and GoRouterState
-  factory AppRouter.instance() => throw UnimplementedError(); // _$GoAppRouter();
-}
-*/

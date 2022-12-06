@@ -6,7 +6,7 @@ import 'package:tab_router/tab_router.dart';
 
 import '../../feature/authentication/widget/authentication_scope.dart';
 import '../localization/localization.dart';
-import 'app_router.dart';
+import '../router/app_router.dart';
 import 'error_screen.dart';
 
 /// {@template material_scope}

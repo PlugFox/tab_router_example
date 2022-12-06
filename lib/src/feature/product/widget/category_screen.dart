@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/router/app_router.dart';
 import '../../../common/widget/common_actions.dart';
 import '../model/category.dart';
 import 'product_scope.dart';
@@ -47,7 +48,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 return ListTile(
                   key: ValueKey<CategoryID>(category.id),
                   title: Text(category.title),
-                  onTap: () => throw UnimplementedError(), // GoRouter.of(context).goCategory(category.id),
+                  onTap: () => AppRouter.of(context).pushTab(
+                    'category',
+                    arguments: <String, String>{'id': category.id},
+                  ),
                 );
               },
             );

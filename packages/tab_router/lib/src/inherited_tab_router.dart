@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
+import '../tab_router.dart';
+
 /// {@template inherited_tab_router}
 /// InheritedTabRouter widget
 /// {@endtemplate}
@@ -12,12 +14,14 @@ class InheritedTabRouter extends InheritedWidget {
     required super.child,
     required this.tabsBuilder,
     required this.pageBuilder,
+    required this.controller,
     required this.tabs,
     super.key,
   });
 
   final Widget Function(BuildContext context, List<String> tabs, String? currentTab, Widget body) tabsBuilder;
   final Page Function(BuildContext context, String name, Map<String, String> arguments) pageBuilder;
+  final RouterController controller;
   final List<String> tabs;
 
   /// The state from the closest instance of this class
