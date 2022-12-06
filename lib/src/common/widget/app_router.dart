@@ -42,9 +42,9 @@ mixin _AppRouterNavigation on InheritedNotifier<RouterController> {
 
   RouterController get controller => notifier ?? _notFound();
 
-  TabRouteState get state => controller.currentConfiguration;
+  TabRouteState get state => controller.value;
 
-  void nav(TabRouteState Function(TabRouteState state) change) => controller.setNewRoutePath(change(state));
+  void nav(TabRouteState Function(TabRouteState state) change) => controller.setState(change(state));
 
   void navTab(TabRouteState Function(TabRouteState state) change) => throw UnimplementedError();
 

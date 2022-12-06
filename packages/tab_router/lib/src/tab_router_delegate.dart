@@ -7,8 +7,15 @@ import 'tab_route_state.dart';
 import 'utils.dart';
 
 @internal
-class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifier, _NavigatorMixin, RouterController {
+class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifier implements RouterController {
   TabRouterDelegate();
+
+  @override
+  TabRouteState get value => currentConfiguration;
+
+  @override
+  NavigatorState? get navigator => _modalObserver.navigator;
+  final NavigatorObserver _modalObserver = RouteObserver<ModalRoute<Object?>>();
 
   @override
   TabRouteState get currentConfiguration {
@@ -32,11 +39,17 @@ class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifie
   }
 
   @override
+  Future<void> setState(TabRouteState configuration) => setNewRoutePath(configuration);
+
+  @override
   Future<bool> popRoute() {
     final nav = navigator;
     if (nav == null) return SynchronousFuture<bool>(false);
     return nav.maybePop();
   }
+
+  @override
+  Future<bool> pop() => popRoute();
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +100,10 @@ class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifie
   }
 }
 
-mixin _NavigatorMixin {
-  NavigatorState? get navigator => _modalObserver.navigator;
-  final NavigatorObserver _modalObserver = RouteObserver<ModalRoute<Object?>>();
-}
+abstract class RouterController implements ValueListenable<TabRouteState> {
+  abstract final NavigatorState? navigator;
 
-mixin RouterController on RouterDelegate<TabRouteState>, _NavigatorMixin, ChangeNotifier {
-  @override
-  TabRouteState get currentConfiguration;
+  Future<void> setState(TabRouteState configuration);
+
+  Future<bool> pop();
 }
