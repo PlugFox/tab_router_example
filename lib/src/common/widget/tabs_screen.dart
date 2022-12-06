@@ -35,7 +35,6 @@ class TabsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentTab = AppRouter.of(context).state.tabs.current;
     final currentIndex = Tabs.values.indexWhere((tab) => tab.name == currentTab).clamp(0, Tabs.values.length - 1);
-    print('!!! BUILD: $currentTab $currentIndex !!!!');
     return Scaffold(
       body: body,
       bottomNavigationBar: BottomNavigationBar(

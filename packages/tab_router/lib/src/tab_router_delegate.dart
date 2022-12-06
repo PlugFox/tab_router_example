@@ -33,6 +33,10 @@ class TabRouterDelegate extends RouterDelegate<TabRouteState> with ChangeNotifie
   Future<void> setNewRoutePath(covariant TabRouteState configuration) {
     // If unchanged, do nothing
     //if (_currentConfiguration == configuration) return SynchronousFuture<void>(null);
+
+    // TODO: check if the new configuration is valid
+    // exclude duplicates
+    // Matiunin Mikhail <plugfox@gmail.com>, 06 December 2022
     _currentConfiguration = configuration;
     notifyListeners();
 
