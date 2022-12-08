@@ -3,9 +3,11 @@ import 'dart:async';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import '../constant/firebase_options.dart';
 import '../util/error_util.dart';
+import '../util/storage.dart';
 import 'platform/platform_initialization.dart';
 
 Future<void>? _$initializeApp;
@@ -25,14 +27,14 @@ FutureOr<void> $initializeApp({
           ]); */
           //await _initFirebase();
           await _catchExceptions();
+          storage = await SharedPreferences.getInstance();
           platformInitialization().ignore();
           /* Analytics.logAppOpen();
           Analytics.logInitialized(elapsedMilliseconds: stopwatch.elapsedMilliseconds); */
         }
       } on Object catch (error, stackTrace) {
         onError?.call(error, stackTrace).ignore();
-        ErrorUtil.logError(error, stackTrace, hint: 'Failed to initialize app')
-            .ignore();
+        ErrorUtil.logError(error, stackTrace, hint: 'Failed to initialize app').ignore();
         rethrow;
       } finally {
         stopwatch.stop();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/util/storage.dart';
 import 'authentication_screen.dart';
 
 /// {@template authentication_scope}
@@ -11,18 +12,15 @@ class AuthenticationScope extends StatefulWidget {
 
   final Widget child;
 
-  static void signIn(BuildContext context) =>
-      context.findAncestorStateOfType<_AuthenticationScopeState>()!.signIn();
+  static void signIn(BuildContext context) => context.findAncestorStateOfType<_AuthenticationScopeState>()!.signIn();
 
-  static void logOut(BuildContext context) =>
-      context.findAncestorStateOfType<_AuthenticationScopeState>()!.logOut();
+  static void logOut(BuildContext context) => context.findAncestorStateOfType<_AuthenticationScopeState>()!.logOut();
 
   @override
   State<AuthenticationScope> createState() => _AuthenticationScopeState();
 }
 
-class _AuthenticationScopeState extends State<AuthenticationScope>
-    with _AuthenticationScopeStateMixin {
+class _AuthenticationScopeState extends State<AuthenticationScope> with _AuthenticationScopeStateMixin {
   @override
   Widget build(BuildContext context) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 450),
@@ -31,11 +29,12 @@ class _AuthenticationScopeState extends State<AuthenticationScope>
 }
 
 mixin _AuthenticationScopeStateMixin on State<AuthenticationScope> {
-  bool _isAuthenticated = false;
+  static const _$key = 'authenticated';
+  bool _isAuthenticated = storage.getBool(_$key) ?? false;
 
   @protected
-  void signIn() => setState(() => _isAuthenticated = true);
+  void signIn() => setState(() => storage.setBool(_$key, _isAuthenticated = true).ignore());
 
   @protected
-  void logOut() => setState(() => _isAuthenticated = false);
+  void logOut() => setState(() => storage.setBool(_$key, _isAuthenticated = false).ignore());
 }

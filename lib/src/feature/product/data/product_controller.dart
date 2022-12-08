@@ -1,5 +1,4 @@
-import 'dart:collection';
-
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart' hide Category;
 
 import '../model/category.dart';
@@ -29,6 +28,24 @@ class ProductController with ChangeNotifier {
           .toList()
           .then<void>((value) => _products = UnmodifiableListView<ProductEntity>(value..sort())),
     ]);
+    _removeEmptyCategories();
+    _removeEmptyRootCategories();
+    for (final product in _products) {
+      final category = _categories.firstWhereOrNull((e) => e.id == product.category);
+      if (category == null) {
+        print('Product ${product.id} has no category');
+      }
+    }
     notifyListeners();
   }
+
+  void _removeEmptyCategories() => _categories = _categories.toList()
+    ..removeWhere(
+      (e) => !e.isRoot && _products.every((p) => p.category != e.id) && _categories.every((p) => p.parent != e.id),
+    );
+
+  void _removeEmptyRootCategories() => _categories = _categories.toList()
+    ..removeWhere(
+      (e) => e.isRoot && _products.every((p) => p.category != e.id) && _categories.every((p) => p.parent != e.id),
+    );
 }
