@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -30,8 +31,10 @@ class NestedNavigationStack extends StatefulWidget {
   State<NestedNavigationStack> createState() => _NestedNavigationStackState();
 }
 
-/// State for widget NestedNavigationStack
 class _NestedNavigationStackState extends State<NestedNavigationStack> {
+  final NavigatorObserver _navigatorObserver = NavigatorObserver();
+  NavigatorState? get _navigator => _navigatorObserver.navigator;
+
   Iterable<Page<Object?>> _buildPages(BuildContext context) sync* {
     final inhTabRouter = InheritedTabRouter.of(context, listen: false);
     final routes = widget.routes;
@@ -69,16 +72,34 @@ class _NestedNavigationStackState extends State<NestedNavigationStack> {
     return true;
   }
 
+  Future<bool> _onBackButtonPressed() {
+    // If the widget is not active, we don't want to handle the back button.
+    if (!widget.active) return SynchronousFuture<bool>(false);
+
+    // If the current navigator can't pop, we don't want to handle the back button.
+    final currentNavigator = _navigator;
+    if (currentNavigator == null || !currentNavigator.canPop()) return Future<bool>.value(false);
+
+    // If the parent navigator can pop, we don't want to handle the back button.
+    final parentNavigator = Navigator.maybeOf(context, rootNavigator: true);
+    if (parentNavigator == null || parentNavigator.canPop()) return Future<bool>.value(false);
+
+    // Try to pop the current navigator.
+    return currentNavigator.maybePop<void>();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('NestedNavigationStack.build: ${widget.tab} ${widget.active} ${widget.routes.length} routes');
     final pages = _buildPages(context).toList(growable: false);
-    return Navigator(
-      pages: pages,
-      /* observers: <NavigatorObserver>[
-          _modalRouteAnalyticsObserver,
-        ], */
-      onPopPage: _onPopPage,
+    return BackButtonListener(
+      onBackButtonPressed: _onBackButtonPressed,
+      child: Navigator(
+        pages: pages,
+        observers: <NavigatorObserver>[
+          _navigatorObserver,
+        ],
+        onPopPage: _onPopPage,
+      ),
     );
   }
 }

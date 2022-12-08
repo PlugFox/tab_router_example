@@ -66,7 +66,7 @@ class _TabRouterBuilderState extends State<TabRouterBuilder> with _TabRouterBuil
     initialLocation: widget.initialLocation,
     //refreshListenable: ,
   );
-  final BackButtonDispatcher backButtonDispatcher = RootBackButtonDispatcher();
+  final RootBackButtonDispatcher _backButtonDispatcher = RootBackButtonDispatcher();
 
   late final _routeInformationParser = TabRouteInformationParser();
 
@@ -74,7 +74,7 @@ class _TabRouterBuilderState extends State<TabRouterBuilder> with _TabRouterBuil
     routerDelegate: _delegate,
     routeInformationProvider: _routeInformationProvider,
     routeInformationParser: _routeInformationParser,
-    backButtonDispatcher: backButtonDispatcher,
+    backButtonDispatcher: _backButtonDispatcher,
   );
 
   @override
@@ -89,6 +89,7 @@ class _TabRouterBuilderState extends State<TabRouterBuilder> with _TabRouterBuil
         tabs: widget.tabs,
         tabsBuilder: widget.tabsBuilder,
         controller: _delegate,
+        backButtonDispatcher: _backButtonDispatcher,
         child: Builder(builder: (context) => widget.routerBuilder(context, _config, _delegate)),
       );
 }

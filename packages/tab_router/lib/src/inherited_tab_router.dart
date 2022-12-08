@@ -16,6 +16,7 @@ class InheritedTabRouter extends InheritedWidget {
     required this.pageBuilder,
     required this.controller,
     required this.tabs,
+    required this.backButtonDispatcher,
     super.key,
   });
 
@@ -23,6 +24,7 @@ class InheritedTabRouter extends InheritedWidget {
   final Page Function(BuildContext context, String name, Map<String, String> arguments) pageBuilder;
   final RouterController controller;
   final List<String> tabs;
+  final RootBackButtonDispatcher backButtonDispatcher;
 
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.

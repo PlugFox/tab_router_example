@@ -10,7 +10,7 @@ import 'tabs_pages.dart';
 /// TabsStack widget
 /// {@endtemplate}
 @internal
-class TabsStack extends StatefulWidget {
+class TabsStack extends StatelessWidget {
   /// {@macro tabs_stack}
   const TabsStack({
     required this.tabsState,
@@ -20,26 +20,9 @@ class TabsStack extends StatefulWidget {
   final TabsSettings? tabsState;
 
   @override
-  State<TabsStack> createState() => _TabsStackState();
-}
-
-class _TabsStackState extends State<TabsStack> {
-  @override
-  void initState() {
-    print('TabsStack.initState');
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant TabsStack oldWidget) {
-    print('TabsStack.didUpdateWidget');
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final tabs = InheritedTabRouter.of(context, listen: true).tabs;
-    final currentTab = widget.tabsState?.current;
+    final currentTab = tabsState?.current;
     final currentIndex = tabs.indexWhere((tab) => tab == currentTab).clamp(0, tabs.length - 1);
     return IndexedStack(
       index: currentIndex,
@@ -50,7 +33,7 @@ class _TabsStackState extends State<TabsStack> {
               key: ValueKey<String>(tab),
               tab: tab,
               active: currentIndex == index,
-              routes: widget.tabsState?[tab] ?? const <RouteSettings>[],
+              routes: tabsState?[tab] ?? const <RouteSettings>[],
             ),
           )
           .toList(growable: false),
