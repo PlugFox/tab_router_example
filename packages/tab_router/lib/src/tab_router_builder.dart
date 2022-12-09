@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Tab;
 
+import 'app_router.dart';
 import 'information_parser.dart';
 import 'information_provider.dart';
 import 'inherited_tab_router.dart';
@@ -29,7 +30,6 @@ class TabRouterBuilder extends StatefulWidget {
   final Widget Function(
     BuildContext context,
     RouterConfig<TabRouteState> config,
-    RouterController controller,
   ) routerBuilder;
 
   /// This callback used for building root with tabs
@@ -90,7 +90,10 @@ class _TabRouterBuilderState extends State<TabRouterBuilder> with _TabRouterBuil
         tabsBuilder: widget.tabsBuilder,
         controller: _delegate,
         backButtonDispatcher: _backButtonDispatcher,
-        child: Builder(builder: (context) => widget.routerBuilder(context, _config, _delegate)),
+        child: AppRouter(
+          controller: _delegate,
+          child: Builder(builder: (context) => widget.routerBuilder(context, _config)),
+        ),
       );
 }
 

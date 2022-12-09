@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tab_router/tab_router.dart';
 
-import '../../../common/router/app_router.dart';
+import '../../../common/widget/breadcrumbs.dart';
 import '../../../common/widget/common_actions.dart';
 import '../model/category.dart';
 import '../model/product.dart';
@@ -9,24 +10,30 @@ import 'product_scope.dart';
 /// {@template category_screen}
 /// CategoryScreen widget
 /// {@endtemplate}
-class CategoryScreen extends StatefulWidget {
+class CategoryScreen extends StatelessWidget {
   /// {@macro category_screen}
   const CategoryScreen({required this.categoryID, super.key});
 
   final CategoryID categoryID;
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
-}
-
-class _CategoryScreenState extends State<CategoryScreen> {
-  @override
   Widget build(BuildContext context) {
-    final currentCategory = ProductScope.getCategoryByID(context, widget.categoryID);
+    final CategoryEntity currentCategory;
+    try {
+      currentCategory = ProductScope.getCategoryByID(context, categoryID);
+    } on Object {
+      print('Category `$categoryID` not found');
+      return const _CategoryNotFound();
+    }
+
     final categories =
         ProductScope.getCategories(context).where((e) => e.parent == currentCategory.id).toList(growable: false);
     final products =
         ProductScope.getProducts(context).where((e) => e.category == currentCategory.id).toList(growable: false);
+    final prevRoutes =
+        AppRouter.of(context).state.tabs['shop']?.where((element) => element.name == 'category').toList() ??
+            <NamedRouteSettings>[];
+
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -39,6 +46,30 @@ class _CategoryScreenState extends State<CategoryScreen> {
             floating: true,
             snap: true,
             forceElevated: true,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: SizedBox(
+                height: 48,
+                child: Breadcrumbs(
+                  breadcrumbs: <Widget, VoidCallback?>{
+                    const Text('Shop'): () => AppRouter.of(context).navTab(
+                          (state) => [],
+                          tab: 'shop',
+                          activate: true,
+                        ),
+                    for (var i = 0; i < prevRoutes.length; i++)
+                      Text(ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title):
+                          prevRoutes.length - 1 == i
+                              ? null
+                              : () => AppRouter.of(context).navTab(
+                                    (state) => state.take(i + 1).toList(growable: false),
+                                    tab: 'shop',
+                                    activate: true,
+                                  ),
+                  },
+                ),
+              ),
+            ),
           ),
 
           // --- Categories --- //
@@ -176,6 +207,52 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+class _CategoryNotFound extends StatelessWidget {
+  const _CategoryNotFound();
+
+  @override
+  Widget build(BuildContext context) {
+    final prevRoutes =
+        AppRouter.of(context).state.tabs['shop']?.where((element) => element.name == 'category').toList() ??
+            <NamedRouteSettings>[];
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Not found', maxLines: 1, overflow: TextOverflow.ellipsis),
+        actions: CommonActions(),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: SizedBox(
+            height: 48,
+            child: Breadcrumbs(
+              breadcrumbs: <Widget, VoidCallback?>{
+                const Text('Shop'): () => AppRouter.of(context).navTab(
+                      (state) => [],
+                      tab: 'shop',
+                      activate: true,
+                    ),
+                for (var i = 0; i < prevRoutes.length; i++)
+                  Text(ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title):
+                      prevRoutes.length - 1 == i
+                          ? null
+                          : () => AppRouter.of(context).navTab(
+                                (state) => state.take(i + 1).toList(growable: false),
+                                tab: 'shop',
+                                activate: true,
+                              ),
+              },
+            ),
+          ),
+        ),
+      ),
+      body: const SafeArea(
+        child: Center(
+          child: Text('Invalid category ID'),
+        ),
       ),
     );
   }

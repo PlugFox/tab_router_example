@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:tab_router/tab_router.dart';
 
 import '../../feature/favorite/widget/favorite_screen.dart';
 import '../../feature/product/widget/category_screen.dart';
@@ -6,7 +7,6 @@ import '../../feature/product/widget/product_screen.dart';
 import '../../feature/product/widget/shop_screen.dart';
 import '../../feature/profile/widget/profile_screen.dart';
 import '../../feature/settings/widget/settings_screen.dart';
-import 'adaptive_page.dart';
 
 typedef NamedPageBuilder = Page<Object?> Function(BuildContext context, Map<String, String> arguments);
 
@@ -30,7 +30,7 @@ final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
   'product': (context, arguments) => AdaptivePage(
         name: 'Product',
         arguments: arguments,
-        builder: (context) => ProductScreen(productID: int.tryParse(arguments['id'] ?? '-1') ?? -1),
+        builder: (context) => ProductScreen(productID: arguments['id'] ?? '-1'),
       ),
   'settings': (context, arguments) => AdaptivePage(
         name: 'Settings',

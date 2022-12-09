@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Tab;
 import 'package:meta/meta.dart';
 
 import 'inherited_tab_router.dart';
+import 'named_route_settings.dart';
 import 'nested_navigation_stack.dart';
 import 'tabs_pages.dart';
 
@@ -33,7 +34,7 @@ class TabsStack extends StatelessWidget {
               key: ValueKey<String>(tab),
               tab: tab,
               active: currentIndex == index,
-              routes: tabsState?[tab] ?? const <RouteSettings>[],
+              routes: tabsState?[tab] ?? const <NamedRouteSettings>[],
             ),
           )
           .toList(growable: false),

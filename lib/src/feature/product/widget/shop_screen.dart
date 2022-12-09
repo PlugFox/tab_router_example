@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tab_router/tab_router.dart';
 
-import '../../../common/router/app_router.dart';
 import '../../../common/widget/common_actions.dart';
 import '../model/category.dart';
 import 'product_scope.dart';

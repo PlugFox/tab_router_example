@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../common/router/app_router.dart';
+import 'package:tab_router/tab_router.dart';
 
 /// {@template profile_icon_button}
 /// ProfileIconButton widget

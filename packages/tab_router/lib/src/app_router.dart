@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:tab_router/tab_router.dart';
+
+import 'named_route_settings.dart';
+import 'tab_route_state.dart';
+import 'tab_router_delegate.dart';
 
 /// {@template app_router}
 /// AppRouter widget
@@ -45,9 +48,32 @@ mixin _AppRouterNavigation on InheritedWidget {
 
   TabRouteState get state => controller.value;
 
+  void reset() => controller.setState(TabRouteState.empty());
+
   void nav(TabRouteState Function(TabRouteState state) change) => controller.setState(change(state));
 
-  void navTab(TabRouteState Function(TabRouteState state) change) => throw UnimplementedError();
+  void navTab(
+    List<RouteSettings> Function(List<NamedRouteSettings> routes) change, {
+    String? tab,
+    bool activate = false,
+  }) {
+    final targetTab = tab ?? state.tabs.current;
+    if (targetTab == null) {
+      assert(false, 'No tab to navigate to');
+      return;
+    }
+    controller.setState(
+      state.copyWith(
+        newTabs: state.tabs.copyWith(
+          newCurrent: activate ? tab : state.tabs.current,
+          newPages: <String, List<RouteSettings>>{
+            ...state.tabs,
+            targetTab: change(state.tabs[targetTab] ?? <NamedRouteSettings>[]),
+          },
+        ),
+      ),
+    );
+  }
 
   void push(String name, {Map<String, String>? arguments}) => nav(
         (state) => state.copyWith(

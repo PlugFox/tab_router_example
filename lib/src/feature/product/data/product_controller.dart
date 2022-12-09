@@ -30,12 +30,6 @@ class ProductController with ChangeNotifier {
     ]);
     _removeEmptyCategories();
     _removeEmptyRootCategories();
-    for (final product in _products) {
-      final category = _categories.firstWhereOrNull((e) => e.id == product.category);
-      if (category == null) {
-        print('Product ${product.id} has no category');
-      }
-    }
     notifyListeners();
   }
 

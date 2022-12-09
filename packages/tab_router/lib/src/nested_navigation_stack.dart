@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import 'inherited_tab_router.dart';
+import 'named_route_settings.dart';
 import 'utils.dart';
 
 /// {@template nested_navigation_stack}
@@ -19,7 +20,7 @@ class NestedNavigationStack extends StatefulWidget {
 
   final String tab;
   final bool active;
-  final List<RouteSettings> routes;
+  final List<NamedRouteSettings> routes;
 
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
@@ -42,8 +43,8 @@ class _NestedNavigationStackState extends State<NestedNavigationStack> {
     for (final route in routes) {
       final name = route.name;
       final arguments = route.arguments;
-      if (name == null || name.isEmpty) return;
-      if (arguments == null || arguments is! Map<String, String>) return;
+      if (name.isEmpty) return;
+      if (arguments is! Map<String, String>) return;
       yield inhTabRouter.pageBuilder(
         context,
         RouterUtils.safeRouteName(name),
@@ -62,7 +63,7 @@ class _NestedNavigationStackState extends State<NestedNavigationStack> {
     controller.setState(
       state.copyWith(
         newTabs: tabs.copyWith(
-          newPages: <String, List<RouteSettings>>{
+          newPages: <String, List<NamedRouteSettings>>{
             ...tabs,
             widget.tab: routes.sublist(0, routes.length - 1),
           },
@@ -94,6 +95,8 @@ class _NestedNavigationStackState extends State<NestedNavigationStack> {
     return BackButtonListener(
       onBackButtonPressed: _onBackButtonPressed,
       child: Navigator(
+        key: ValueKey<String>('tab_${widget.tab}'),
+        restorationScopeId: 'tab_${widget.tab}',
         pages: pages,
         observers: <NavigatorObserver>[
           _navigatorObserver,

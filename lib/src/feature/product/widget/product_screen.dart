@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tab_router/tab_router.dart';
 
+import '../../../common/widget/breadcrumbs.dart';
 import '../../../common/widget/common_actions.dart';
 import '../model/product.dart';
 import 'product_scope.dart';
@@ -11,15 +13,51 @@ class ProductScreen extends StatelessWidget {
   /// {@macro product_screen}
   const ProductScreen({required this.productID, super.key});
 
-  final ProductID productID;
+  final String productID;
 
   @override
   Widget build(BuildContext context) {
-    final product = ProductScope.getProductByID(context, productID);
+    ProductEntity? product;
+    try {
+      final id = int.parse(productID);
+      product = ProductScope.getProductByID(context, id);
+    } on Object {
+      print('Product `$productID` not found');
+      product = null;
+    }
+
+    if (product == null) return const _ProductNotFound();
+
+    final prevRoutes =
+        AppRouter.of(context).state.tabs['shop']?.where((element) => element.name == 'category').toList() ??
+            <NamedRouteSettings>[];
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title, maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: CommonActions(),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: SizedBox(
+            height: 48,
+            child: Breadcrumbs(
+              breadcrumbs: <Widget, VoidCallback?>{
+                const Text('Shop'): () => AppRouter.of(context).navTab(
+                      (state) => [],
+                      tab: 'shop',
+                      activate: true,
+                    ),
+                for (var i = 0; i < prevRoutes.length; i++)
+                  Text(ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title): () =>
+                      AppRouter.of(context).navTab(
+                        (state) => state.take(i + 1).toList(growable: false),
+                        tab: 'shop',
+                        activate: true,
+                      ),
+                Text(product.title): null,
+              },
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: CustomScrollView(
@@ -101,6 +139,51 @@ class ProductScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProductNotFound extends StatelessWidget {
+  const _ProductNotFound();
+
+  @override
+  Widget build(BuildContext context) {
+    final prevRoutes =
+        AppRouter.of(context).state.tabs['shop']?.where((element) => element.name == 'category').toList() ??
+            <NamedRouteSettings>[];
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Not found', maxLines: 1, overflow: TextOverflow.ellipsis),
+        actions: CommonActions(),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: SizedBox(
+            height: 48,
+            child: Breadcrumbs(
+              breadcrumbs: <Widget, VoidCallback?>{
+                const Text('Shop'): () => AppRouter.of(context).navTab(
+                      (state) => [],
+                      tab: 'shop',
+                      activate: true,
+                    ),
+                for (var i = 0; i < prevRoutes.length; i++)
+                  Text(ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title): () =>
+                      AppRouter.of(context).navTab(
+                        (state) => state.take(i + 1).toList(growable: false),
+                        tab: 'shop',
+                        activate: true,
+                      ),
+                const Text('Not found'): null,
+              },
+            ),
+          ),
+        ),
+      ),
+      body: const SafeArea(
+        child: Center(
+          child: Text('Invalid product ID'),
         ),
       ),
     );

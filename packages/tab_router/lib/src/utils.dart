@@ -15,4 +15,9 @@ abstract class RouterUtils {
     if (arguments != null && arguments is Map<String, String>) return arguments;
     return const <String, String>{};
   }
+
+  static Uri? safeLocationToUri(String? location) {
+    if (location == null || location.isEmpty || location == '/') return null;
+    return Uri.tryParse(location);
+  }
 }

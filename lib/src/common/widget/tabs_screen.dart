@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../router/app_router.dart';
+import 'package:tab_router/tab_router.dart';
 
 enum Tabs with Comparable<Tabs> {
   favorite('Favorite'),
