@@ -4,6 +4,7 @@ import 'package:tab_router/tab_router.dart';
 import '../../../common/widget/breadcrumbs.dart';
 import '../../../common/widget/common_actions.dart';
 import '../model/product.dart';
+import 'photo_view.dart';
 import 'product_scope.dart';
 
 /// {@template product_screen}
@@ -75,11 +76,34 @@ class ProductScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   children: product.images
-                      .map(Image.asset)
-                      .map(
-                        (e) => Padding(
+                      .map<Widget>(
+                        (image) => Material(
+                          color: Colors.grey[800],
+                          child: InkWell(
+                            onTap: () => PhotoViewScreen.show(
+                              context,
+                              Hero(
+                                tag: 'product-image-$image',
+                                child: Image.asset(
+                                  image,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                            child: Hero(
+                              tag: 'product-image-$image',
+                              child: Image.asset(
+                                image,
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .map<Widget>(
+                        (child) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: e,
+                          child: child,
                         ),
                       )
                       .toList(growable: false),
