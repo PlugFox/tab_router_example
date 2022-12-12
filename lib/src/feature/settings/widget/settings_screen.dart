@@ -78,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             enableDrag: false,
                             builder: (context) => const Center(child: Text('Hello there')),
                           ),
-                        );
+                        ).ignore();
                         HapticFeedback.mediumImpact().ignore();
                       },
                     ),
