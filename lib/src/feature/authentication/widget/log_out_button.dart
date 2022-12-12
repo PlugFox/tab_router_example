@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'authentication_scope.dart';
 
@@ -13,6 +14,9 @@ class LogOutButton extends StatelessWidget {
   Widget build(BuildContext context) => IconButton(
         icon: const Icon(Icons.logout),
         tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-        onPressed: () => AuthenticationScope.logOut(context),
+        onPressed: () {
+          AuthenticationScope.logOut(context);
+          HapticFeedback.mediumImpact().ignore();
+        },
       );
 }

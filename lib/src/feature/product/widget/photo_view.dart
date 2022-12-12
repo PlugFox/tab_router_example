@@ -80,7 +80,7 @@ class PhotoViewBackButton extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     Navigator.maybePop(context);
-                    HapticFeedback.lightImpact().ignore();
+                    HapticFeedback.mediumImpact().ignore();
                   },
                   customBorder: const CircleBorder(),
                   child: Icon(

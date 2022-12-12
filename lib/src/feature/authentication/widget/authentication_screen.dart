@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'authentication_scope.dart';
 
@@ -17,7 +18,10 @@ class AuthenticationScreen extends StatelessWidget {
         body: SafeArea(
           child: Center(
             child: ElevatedButton(
-              onPressed: () => AuthenticationScope.signIn(context),
+              onPressed: () {
+                AuthenticationScope.signIn(context);
+                HapticFeedback.mediumImpact().ignore();
+              },
               child: const Text('Sign in'),
             ),
           ),

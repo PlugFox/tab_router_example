@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
 
 /// {@template not_found_screen}
@@ -21,7 +22,10 @@ class NotFoundScreen extends StatelessWidget {
             children: <Widget>[
               const Text('Not found', style: TextStyle(fontSize: 24)),
               TextButton(
-                onPressed: () => Navigator.canPop(context) ? Navigator.pop(context) : AppRouter.of(context).reset(),
+                onPressed: () {
+                  Navigator.canPop(context) ? Navigator.pop(context) : AppRouter.of(context).reset();
+                  HapticFeedback.mediumImpact().ignore();
+                },
                 child: const Text('Go back'),
               )
             ],

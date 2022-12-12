@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
 
 import '../../../common/widget/common_actions.dart';
@@ -33,10 +34,13 @@ class ShopScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: OutlinedButton(
                       child: Text(category.title),
-                      onPressed: () => AppRouter.maybeOf(context)?.pushTab(
-                        'category',
-                        arguments: <String, String>{'id': category.id},
-                      ),
+                      onPressed: () {
+                        AppRouter.maybeOf(context)?.pushTab(
+                          'category',
+                          arguments: <String, String>{'id': category.id},
+                        );
+                        HapticFeedback.mediumImpact().ignore();
+                      },
                     ),
                   );
                 },

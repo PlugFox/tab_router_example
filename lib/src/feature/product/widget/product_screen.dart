@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
 
 import '../../../common/widget/breadcrumbs.dart';
@@ -80,16 +81,19 @@ class ProductScreen extends StatelessWidget {
                         (image) => Material(
                           color: Colors.grey[800],
                           child: InkWell(
-                            onTap: () => PhotoViewScreen.show(
-                              context,
-                              Hero(
-                                tag: 'product-image-$image',
-                                child: Image.asset(
-                                  image,
-                                  fit: BoxFit.fitHeight,
+                            onTap: () {
+                              PhotoViewScreen.show(
+                                context,
+                                Hero(
+                                  tag: 'product-image-$image',
+                                  child: Image.asset(
+                                    image,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                              HapticFeedback.mediumImpact().ignore();
+                            },
                             child: Hero(
                               tag: 'product-image-$image',
                               child: Image.asset(

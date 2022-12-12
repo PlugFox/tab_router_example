@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// {@template profile_screen}
 /// ProfileScreen widget
@@ -12,7 +13,10 @@ class ProfileScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.adaptive.arrow_back),
-            onPressed: () => Navigator.maybePop(context),
+            onPressed: () {
+              Navigator.maybePop(context);
+              HapticFeedback.mediumImpact().ignore();
+            },
           ),
           title: const Text('Profile'),
         ),

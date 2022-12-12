@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
 
 enum Tabs with Comparable<Tabs> {
@@ -52,7 +53,10 @@ class TabsScreen extends StatelessWidget {
           ),
         ],
         currentIndex: currentIndex,
-        onTap: (index) => AppRouter.of(context).activateTab(Tabs.values[index].name),
+        onTap: (index) {
+          AppRouter.of(context).activateTab(Tabs.values[index].name);
+          HapticFeedback.selectionClick().ignore();
+        },
       ),
     );
   }

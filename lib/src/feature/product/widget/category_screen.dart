@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
 
 import '../../../common/widget/breadcrumbs.dart';
@@ -93,10 +94,13 @@ class CategoryScreen extends StatelessWidget {
                   return ListTile(
                     key: ValueKey<CategoryID>(category.id),
                     title: Text(category.title),
-                    onTap: () => AppRouter.of(context).pushTab(
-                      'category',
-                      arguments: <String, String>{'id': category.id},
-                    ),
+                    onTap: () {
+                      AppRouter.of(context).pushTab(
+                        'category',
+                        arguments: <String, String>{'id': category.id},
+                      );
+                      HapticFeedback.mediumImpact().ignore();
+                    },
                   );
                 },
               ),
@@ -188,10 +192,13 @@ class CategoryScreen extends StatelessWidget {
                             ),
                             Positioned.fill(
                               child: InkWell(
-                                onTap: () => AppRouter.of(context).pushTab(
-                                  'product',
-                                  arguments: <String, String>{'id': product.id.toString()},
-                                ),
+                                onTap: () {
+                                  AppRouter.of(context).pushTab(
+                                    'product',
+                                    arguments: <String, String>{'id': product.id.toString()},
+                                  );
+                                  HapticFeedback.mediumImpact().ignore();
+                                },
                                 splashColor: Theme.of(context).splashColor,
                                 borderRadius: BorderRadius.circular(16),
                                 child: const SizedBox.expand(),
