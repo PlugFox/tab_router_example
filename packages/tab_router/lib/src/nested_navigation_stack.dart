@@ -44,7 +44,6 @@ class _NestedNavigationStackState extends State<NestedNavigationStack> {
       final name = route.name;
       final arguments = route.arguments;
       if (name.isEmpty) return;
-      if (arguments is! Map<String, String>) return;
       yield inhTabRouter.pageBuilder(
         context,
         RouterUtils.safeRouteName(name),

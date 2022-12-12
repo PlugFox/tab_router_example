@@ -15,11 +15,13 @@ final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
   'favorite': (context, arguments) => AdaptivePage(
         name: 'Favorite',
         arguments: arguments,
+        key: const ValueKey<String>('Favorite'),
         builder: (context) => const FavoriteScreen(),
       ),
   'shop': (context, arguments) => AdaptivePage(
         name: 'Shop',
         arguments: arguments,
+        key: const ValueKey<String>('Shop'),
         builder: (context) => const ShopScreen(),
       ),
   'category': (context, arguments) => AdaptivePage(
@@ -35,11 +37,13 @@ final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
   'settings': (context, arguments) => AdaptivePage(
         name: 'Settings',
         arguments: arguments,
+        key: const ValueKey<String>('Settings'),
         builder: (context) => const SettingsScreen(),
       ),
   'profile': (context, arguments) => AdaptivePage(
         name: 'Profile',
         arguments: arguments,
+        key: const ValueKey<String>('Profile'),
         builder: (context) => const ProfileScreen(),
       ),
 };

@@ -9,6 +9,7 @@ class AdaptivePage extends NamedPage {
     required super.name,
     required WidgetBuilder builder,
     super.arguments,
+    super.key,
   }) : _builder = builder;
 
   final WidgetBuilder _builder;

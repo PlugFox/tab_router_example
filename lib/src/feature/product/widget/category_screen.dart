@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
@@ -23,7 +25,7 @@ class CategoryScreen extends StatelessWidget {
     try {
       currentCategory = ProductScope.getCategoryByID(context, categoryID);
     } on Object {
-      print('Category `$categoryID` not found');
+      log('Category `$categoryID` not found');
       return const _CategoryNotFound();
     }
 

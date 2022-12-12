@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,9 +20,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void dispose() {
-    // TODO: we should dispose pages on hot reload
+    // TODO: we should not dispose pages on hot reload
     // Matiunin Mikhail <plugfox@gmail.com>, 08 December 2022
-    print('TODO');
+    log('TODO');
     super.dispose();
   }
 

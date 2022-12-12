@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
@@ -25,7 +27,7 @@ class ProductScreen extends StatelessWidget {
       final id = int.parse(productID);
       product = ProductScope.getProductByID(context, id);
     } on Object {
-      print('Product `$productID` not found');
+      log('Product `$productID` not found');
       product = null;
     }
 

@@ -33,9 +33,9 @@ class TabRouterBuilder extends StatefulWidget {
   ) routerBuilder;
 
   /// This callback used for building root with tabs
-  /// [tabs] - list of tabs
-  /// [currentTab] - current tab
-  /// [body] - navigation stack
+  /// tabs - list of tabs
+  /// currentTab - current tab
+  /// body - navigation stack
   final Widget Function(
     BuildContext context,
     List<String> tabs,
