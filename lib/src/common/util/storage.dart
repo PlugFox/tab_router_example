@@ -1,3 +1,3 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-late final SharedPreferences storage;
+late final SharedPreferences $storage;

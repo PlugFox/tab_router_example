@@ -27,7 +27,7 @@ FutureOr<void> $initializeApp({
           ]); */
           //await _initFirebase();
           await _catchExceptions();
-          storage = await SharedPreferences.getInstance();
+          $storage = await SharedPreferences.getInstance();
           platformInitialization().ignore();
           /* Analytics.logAppOpen();
           Analytics.logInitialized(elapsedMilliseconds: stopwatch.elapsedMilliseconds); */

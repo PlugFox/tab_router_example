@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:tab_router/tab_router.dart';
 
+import '../../feature/favorite/widget/favorite_scope.dart';
 import '../../feature/product/widget/product_scope.dart';
 import '../router/not_found_screen.dart';
 import '../router/routes.dart';
@@ -18,11 +19,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ProductScope(
-        child: TabRouterBuilder(
-          tabs: Tabs.values.map<String>((e) => e.name).toList(),
-          routerBuilder: _routerBuilder,
-          pageBuilder: _pageBuilder,
-          tabsBuilder: _tabsBuilder,
+        child: FavoriteScope(
+          child: TabRouterBuilder(
+            tabs: Tabs.values.map<String>((e) => e.name).toList(),
+            routerBuilder: _routerBuilder,
+            pageBuilder: _pageBuilder,
+            tabsBuilder: _tabsBuilder,
+          ),
         ),
       );
 

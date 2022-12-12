@@ -4,6 +4,7 @@ import 'package:tab_router/tab_router.dart';
 
 import '../../../common/widget/breadcrumbs.dart';
 import '../../../common/widget/common_actions.dart';
+import '../../favorite/widget/favorite_button.dart';
 import '../model/product.dart';
 import 'photo_view.dart';
 import 'product_scope.dart';
@@ -117,6 +118,20 @@ class ProductScreen extends StatelessWidget {
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 8,
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Divider(
+                thickness: 1,
+                indent: 16,
+                endIndent: 16,
+                height: 8,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: FavoriteButton(product: product),
               ),
             ),
             const SliverToBoxAdapter(

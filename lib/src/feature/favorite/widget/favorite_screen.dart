@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../common/widget/common_actions.dart';
+import 'favorite_scope.dart';
 
 /// {@template favorite_screen}
 /// FavoriteScreen widget
@@ -17,28 +19,52 @@ class FavoriteScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: Center(
-            child: ListView(
-              children: ListTile.divideTiles(
-                context: context,
-                tiles: <Widget>[
-                  ListTile(
-                    title: const Center(child: Text('Item 1')),
-                    onTap: () {},
+            child: Builder(
+              builder: (context) {
+                final favorites = FavoriteScope.of(context);
+                return ListView.separated(
+                  itemCount: favorites.length,
+                  itemBuilder: (context, index) {
+                    final product = favorites[index];
+                    return ListTile(
+                      title: Text(product.title),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => showDialog<void>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Delete'),
+                            content: Text('Are you sure you want to delete ${product.title} from favorites?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  HapticFeedback.selectionClick().ignore();
+                                },
+                                child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  FavoriteScope.remove(context, product.id);
+                                  Navigator.of(context).pop();
+                                  HapticFeedback.mediumImpact().ignore();
+                                },
+                                child: const Text('DELETE'),
+                              ),
+                            ],
+                          ),
+                        ).ignore(),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(
+                    thickness: 1,
                   ),
-                  ListTile(
-                    title: const Center(child: Text('Item 2')),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: const Center(child: Text('Item 3')),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: const Center(child: Text('Item 4')),
-                    onTap: () {},
-                  ),
-                ],
-              ).toList(),
+                );
+              },
             ),
           ),
         ),

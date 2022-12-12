@@ -30,11 +30,11 @@ class _AuthenticationScopeState extends State<AuthenticationScope> with _Authent
 
 mixin _AuthenticationScopeStateMixin on State<AuthenticationScope> {
   static const _$key = 'authenticated';
-  bool _isAuthenticated = storage.getBool(_$key) ?? false;
+  bool _isAuthenticated = $storage.getBool(_$key) ?? false;
 
   @protected
-  void signIn() => setState(() => storage.setBool(_$key, _isAuthenticated = true).ignore());
+  void signIn() => setState(() => $storage.setBool(_$key, _isAuthenticated = true).ignore());
 
   @protected
-  void logOut() => setState(() => storage.setBool(_$key, _isAuthenticated = false).ignore());
+  void logOut() => setState(() => $storage.setBool(_$key, _isAuthenticated = false).ignore());
 }
