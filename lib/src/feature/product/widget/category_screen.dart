@@ -55,20 +55,31 @@ class CategoryScreen extends StatelessWidget {
                 height: 48,
                 child: Breadcrumbs(
                   breadcrumbs: <Widget, VoidCallback?>{
-                    const Text('Shop'): () => AppRouter.of(context).navTab(
+                    Text(
+                      'Shop',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).primaryTextTheme.labelMedium,
+                    ): () => AppRouter.of(context).navTab(
                           (state) => [],
                           tab: 'shop',
                           activate: true,
                         ),
                     for (var i = 0; i < prevRoutes.length; i++)
-                      Text(ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title):
-                          prevRoutes.length - 1 == i
-                              ? null
-                              : () => AppRouter.of(context).navTab(
-                                    (state) => state.take(i + 1).toList(growable: false),
-                                    tab: 'shop',
-                                    activate: true,
-                                  ),
+                      Text(
+                        ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).primaryTextTheme.labelMedium?.copyWith(
+                              color: prevRoutes.length - 1 == i ? Colors.black : null,
+                            ),
+                      ): prevRoutes.length - 1 == i
+                          ? null
+                          : () => AppRouter.of(context).navTab(
+                                (state) => state.take(i + 1).toList(growable: false),
+                                tab: 'shop',
+                                activate: true,
+                              ),
                   },
                 ),
               ),

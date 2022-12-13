@@ -46,19 +46,35 @@ class ProductScreen extends StatelessWidget {
             height: 48,
             child: Breadcrumbs(
               breadcrumbs: <Widget, VoidCallback?>{
-                const Text('Shop'): () => AppRouter.of(context).navTab(
+                Text(
+                  'Shop',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).primaryTextTheme.labelMedium,
+                ): () => AppRouter.of(context).navTab(
                       (state) => [],
                       tab: 'shop',
                       activate: true,
                     ),
                 for (var i = 0; i < prevRoutes.length; i++)
-                  Text(ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title): () =>
-                      AppRouter.of(context).navTab(
+                  Text(
+                    ProductScope.getCategoryByID(context, prevRoutes[i].arguments['id']!).title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).primaryTextTheme.labelMedium,
+                  ): () => AppRouter.of(context).navTab(
                         (state) => state.take(i + 1).toList(growable: false),
                         tab: 'shop',
                         activate: true,
                       ),
-                Text(product.title): null,
+                Text(
+                  product.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).primaryTextTheme.labelMedium?.copyWith(
+                        color: Colors.black,
+                      ),
+                ): null,
               },
             ),
           ),

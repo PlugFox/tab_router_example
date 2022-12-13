@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         body: const SafeArea(
           child: Center(
-            child: Text('Profile'),
+            child: Text('Full screen profile screen'),
           ),
         ),
       );

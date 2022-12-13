@@ -27,6 +27,9 @@ class Breadcrumbs extends StatelessWidget {
       list.add(
         TextButton(
           onPressed: entry.value,
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+          ),
           child: entry.key,
         ),
       );
