@@ -58,7 +58,7 @@ const List<String> pre = <String>[];
 const List<String> build = <String>[r'1'];
 
 /// Build date in Unix Time (in seconds)
-const int timestamp = 1670519905;
+const int timestamp = 1670931576;
 
 /// Name [name]
 const String name = r'tab_router_example';
@@ -104,6 +104,7 @@ const Map<String, Object> dependencies = <String, Object>{
   'tab_router': <String, Object>{
     'path': r'packages/tab_router',
   },
+  'photo_view': r'^0.14.0',
 };
 
 /// Developer dependencies
@@ -111,7 +112,7 @@ const Map<String, Object> devDependencies = <String, Object>{
   'flutter_test': <String, Object>{
     'sdk': r'flutter',
   },
-  'dart_code_metrics': r'^5.0.1',
+  'dart_code_metrics': r'^5.2.1',
   'build': r'^2.0.0',
   'build_runner': r'^2.0.2',
   'build_test': r'^2.0.0',

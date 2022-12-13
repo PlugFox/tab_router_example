@@ -5,6 +5,7 @@ import 'package:tab_router/tab_router.dart';
 
 import '../../feature/favorite/widget/favorite_scope.dart';
 import '../../feature/product/widget/product_scope.dart';
+import '../../feature/settings/widget/theme_scope.dart';
 import '../router/not_found_screen.dart';
 import '../router/routes.dart';
 import 'material_scope.dart';
@@ -20,11 +21,13 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ProductScope(
         child: FavoriteScope(
-          child: TabRouterBuilder(
-            tabs: Tabs.values.map<String>((e) => e.name).toList(),
-            routerBuilder: _routerBuilder,
-            pageBuilder: _pageBuilder,
-            tabsBuilder: _tabsBuilder,
+          child: ThemeScope(
+            child: TabRouterBuilder(
+              tabs: Tabs.values.map<String>((e) => e.name).toList(),
+              routerBuilder: _routerBuilder,
+              pageBuilder: _pageBuilder,
+              tabsBuilder: _tabsBuilder,
+            ),
           ),
         ),
       );

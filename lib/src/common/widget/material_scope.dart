@@ -1,9 +1,8 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../feature/authentication/widget/authentication_scope.dart';
+import '../../feature/settings/widget/theme_scope.dart';
 import '../localization/localization.dart';
 import 'error_screen.dart';
 
@@ -30,8 +29,8 @@ class _MaterialScopeState extends State<MaterialScope> {
         title: 'Router example',
         restorationScopeId: 'material_scope',
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.system,
-        theme: ui.window.platformBrightness == ui.Brightness.light ? ThemeData.light() : ThemeData.dark(),
+        themeMode: ThemeScope.modeOf(context),
+        theme: ThemeScope.dataOf(context),
         localizationsDelegates: const <LocalizationsDelegate<Object?>>[
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

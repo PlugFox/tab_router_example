@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tab_router/tab_router.dart';
 
+import '../../feature/favorite/widget/favorite_scope.dart';
+
 enum Tabs with Comparable<Tabs> {
   favorite('Favorite'),
   shop('Shop'),
@@ -35,12 +37,13 @@ class TabsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentTab = AppRouter.of(context).state.tabs.current;
     final currentIndex = Tabs.values.indexWhere((tab) => tab.name == currentTab).clamp(0, Tabs.values.length - 1);
+    final count = FavoriteScope.of(context).length;
     return Scaffold(
       body: body,
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: const Icon(Icons.favorite),
+            icon: _IconWithBadge(Icons.favorite, badge: count > 0 ? count.toString() : null, size: 24),
             label: Tabs.favorite.label,
           ),
           BottomNavigationBarItem(
@@ -60,4 +63,47 @@ class TabsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class _IconWithBadge extends StatelessWidget {
+  const _IconWithBadge(this.icon, {this.badge, this.size = 48});
+
+  final IconData icon;
+  final String? badge;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child: SizedBox.square(
+          dimension: size,
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Icon(icon, size: size),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: badge == null
+                    ? const SizedBox.shrink()
+                    : SizedBox.square(
+                        key: ValueKey<String>(badge ?? ''),
+                        dimension: size / 2,
+                        child: Center(
+                          child: Text(
+                            badge ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              fontSize: size / 2.5,
+                              height: 1,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+              ),
+            ],
+          ),
+        ),
+      );
 }

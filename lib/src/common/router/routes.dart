@@ -7,6 +7,7 @@ import '../../feature/product/widget/product_screen.dart';
 import '../../feature/product/widget/shop_screen.dart';
 import '../../feature/profile/widget/profile_screen.dart';
 import '../../feature/settings/widget/settings_screen.dart';
+import '../../feature/settings/widget/theme_screen.dart';
 
 typedef NamedPageBuilder = Page<Object?> Function(BuildContext context, Map<String, String> arguments);
 
@@ -39,6 +40,12 @@ final Map<String, NamedPageBuilder> $routes = <String, NamedPageBuilder>{
         arguments: arguments,
         key: const ValueKey<String>('Settings'),
         builder: (context) => const SettingsScreen(),
+      ),
+  'theme': (context, arguments) => AdaptivePage(
+        name: 'Theme',
+        arguments: arguments,
+        key: const ValueKey<String>('Theme'),
+        builder: (context) => const ThemeScreen(),
       ),
   'profile': (context, arguments) => AdaptivePage(
         name: 'Profile',

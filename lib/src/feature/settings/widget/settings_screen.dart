@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tab_router/tab_router.dart';
 
 import '../../../common/constants/pubspec.yaml.g.dart' as pubspec;
 import '../../../common/widget/common_actions.dart';
@@ -9,22 +8,9 @@ import '../../../common/widget/common_actions.dart';
 /// {@template settings_screen}
 /// SettingsScreen widget
 /// {@endtemplate}
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   /// {@macro settings_screen}
   const SettingsScreen({super.key});
-
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  @override
-  void dispose() {
-    // TODO: we should not dispose pages on hot reload
-    // Matiunin Mikhail <plugfox@gmail.com>, 08 December 2022
-    log('TODO');
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -38,6 +24,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Positioned.fill(
                 child: ListView(
                   children: <Widget>[
+                    ListTile(
+                      title: const Text('Change theme'),
+                      subtitle: const Text('Change theme to dark or light'),
+                      onTap: () {
+                        AppRouter.of(context).pushTab(
+                          'theme',
+                          arguments: <String, String>{},
+                        );
+                        HapticFeedback.mediumImpact().ignore();
+                      },
+                    ),
                     ListTile(
                       title: const Text('Version'),
                       subtitle: const Text('Show modal alert dialog with version'),

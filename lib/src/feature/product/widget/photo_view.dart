@@ -19,7 +19,6 @@ class PhotoViewScreen extends StatelessWidget {
               child: child,
             ),
           ),
-          settings: const RouteSettings(name: 'photo_view'),
         ),
       );
 

@@ -75,45 +75,48 @@ class ProductScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 256,
-                child: ListView(
-                  primary: false,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  children: product.images
-                      .map<Widget>(
-                        (image) => Material(
-                          color: Colors.grey[800],
-                          child: InkWell(
-                            onTap: () {
-                              PhotoViewScreen.show(
-                                context,
-                                Hero(
-                                  tag: 'product-image-$image',
-                                  child: Image.asset(
-                                    image,
-                                    fit: BoxFit.fitHeight,
+                child: Center(
+                  child: ListView(
+                    primary: false,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    shrinkWrap: true,
+                    children: product.images
+                        .map<Widget>(
+                          (image) => Material(
+                            color: Colors.grey[800],
+                            child: InkWell(
+                              onTap: () {
+                                PhotoViewScreen.show(
+                                  context,
+                                  Hero(
+                                    tag: 'product-image-$image',
+                                    child: Image.asset(
+                                      image,
+                                      fit: BoxFit.fitHeight,
+                                    ),
                                   ),
+                                );
+                                HapticFeedback.mediumImpact().ignore();
+                              },
+                              child: Hero(
+                                tag: 'product-image-$image',
+                                child: Image.asset(
+                                  image,
+                                  fit: BoxFit.fitHeight,
                                 ),
-                              );
-                              HapticFeedback.mediumImpact().ignore();
-                            },
-                            child: Hero(
-                              tag: 'product-image-$image',
-                              child: Image.asset(
-                                image,
-                                fit: BoxFit.fitHeight,
                               ),
                             ),
                           ),
-                        ),
-                      )
-                      .map<Widget>(
-                        (child) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: child,
-                        ),
-                      )
-                      .toList(growable: false),
+                        )
+                        .map<Widget>(
+                          (child) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: child,
+                          ),
+                        )
+                        .toList(growable: false),
+                  ),
                 ),
               ),
             ),
