@@ -61,7 +61,7 @@ class CategoryScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).primaryTextTheme.labelMedium,
                     ): () => AppRouter.of(context).navTab(
-                          (state) => [],
+                          (_) => [],
                           tab: 'shop',
                           activate: true,
                         ),
