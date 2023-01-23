@@ -30,7 +30,7 @@ dev_dependencies:
   dart_code_metrics: ^5.2.1
   build: ^2.0.0
   build_runner: ^2.0.2
-  build_test: ^2.0.0
+  build_test: ^2.1.6
   flutter_gen_runner: any
   pubspec_generator: ^3.0.1
 
