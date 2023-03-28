@@ -31,7 +31,7 @@ dev_dependencies:
   build: ^2.0.0
   build_runner: ^2.0.2
   build_test: ^2.1.7
-  flutter_gen_runner: any
+  flutter_gen_runner: ^5.2.0
   pubspec_generator: ^3.0.1
 
 flutter:
